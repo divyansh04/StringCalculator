@@ -4,28 +4,30 @@ class StringCalculator {
       return 0;
     }
 
-    String numbersPart = numbers;
-    RegExp delimiters = RegExp(r'[,\n]');
+    var numbersPart = numbers;
+    var delimiters = <String>[',', '\n'];
 
     if (numbers.startsWith('//')) {
       final parts = numbers.split('\n');
       final delimiterLine = parts.first;
       numbersPart = parts.sublist(1).join('\n');
 
-      String customDelimiter;
-      if (delimiterLine.startsWith('//[') && delimiterLine.endsWith(']')) {
-        // Handles "//[delimiter]\n" format
-        customDelimiter = delimiterLine.substring(3, delimiterLine.length - 1);
+      final delimiterRegex = RegExp(r'\[(.*?)\]');
+      final matches = delimiterRegex.allMatches(delimiterLine);
+
+      if (matches.isNotEmpty) {
+        delimiters = matches.map((m) => RegExp.escape(m.group(1)!)).toList();
       } else {
-        // Handles "//d\n" format for backward compatibility
-        customDelimiter = delimiterLine.substring(2);
+        // Fallback for single, non-bracketed delimiter
+        delimiters = [RegExp.escape(delimiterLine.substring(2))];
       }
-      delimiters = RegExp(RegExp.escape(customDelimiter));
     }
+
+    final combinedDelimiterRegex = RegExp(delimiters.join('|'));
 
     final numberList =
         numbersPart
-            .split(delimiters)
+            .split(combinedDelimiterRegex)
             .where((part) => part.isNotEmpty)
             .map((part) => int.parse(part.trim()))
             .toList();

@@ -80,5 +80,12 @@ void main() {
     test('should support custom delimiters of any length', () {
       expect(calculator.add('//[***]\n1***2***3'), 6);
     });
+    test('should support multiple custom delimiters', () {
+      expect(calculator.add('//[*][%]\n1*2%3'), 6);
+    });
+
+    test('should support multiple custom delimiters of any length', () {
+      expect(calculator.add('//[**][%%]\n1**2%%3'), 6);
+    });
   });
 }
