@@ -25,5 +25,13 @@ void main() {
     test('should return the sum of an unknown amount of numbers', () {
       expect(calculator.add('1,2,3,4,5'), 15);
     });
+
+    test('should handle new lines between numbers', () {
+      expect(calculator.add('1\n2,3'), 6);
+    });
+    test('should ignore empty strings from trailing delimiters', () {
+      expect(calculator.add('1,2,'), 3);
+    });
+
   });
 }

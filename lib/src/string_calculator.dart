@@ -4,10 +4,13 @@ class StringCalculator {
       return 0;
     }
 
-    // Split the string by comma, convert parts to integers, and sum them up.
-    // This functional approach handles any amount of numbers.
+    // Use a regular expression to split by both comma and newline.
+    final delimiters = RegExp(r'[,\n]');
     return numbers
-        .split(',')
+        .split(delimiters)
+        .where(
+          (part) => part.isNotEmpty,
+        ) // Ensure we don't parse empty strings from splits
         .map((part) => int.parse(part.trim()))
         .fold(0, (previousValue, element) => previousValue + element);
   }
