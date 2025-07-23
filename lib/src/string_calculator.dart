@@ -13,14 +13,25 @@ class StringCalculator {
       numbersPart = parts.sublist(1).join('\n');
 
       final customDelimiter = delimiterLine.substring(2);
-      // Escape the delimiter to ensure it's treated as a literal character in the regex.
       delimiters = RegExp(RegExp.escape(customDelimiter));
     }
 
-    return numbersPart
-        .split(delimiters)
-        .where((part) => part.isNotEmpty)
-        .map((part) => int.parse(part.trim()))
-        .fold(0, (previousValue, element) => previousValue + element);
+    final numberList =
+        numbersPart
+            .split(delimiters)
+            .where((part) => part.isNotEmpty)
+            .map((part) => int.parse(part.trim()))
+            .toList();
+
+    final negatives = numberList.where((n) => n < 0).toList();
+
+    if (negatives.isNotEmpty) {
+      throw Exception('negatives not allowed: ${negatives.join(', ')}');
+    }
+
+    return numberList.fold(
+      0,
+      (previousValue, element) => previousValue + element,
+    );
   }
 }

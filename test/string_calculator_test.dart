@@ -41,5 +41,33 @@ void main() {
         expect(calculator.add('//*\n1*2*3'), 6);
       },
     );
+    test('should throw an exception when a negative number is provided', () {
+      expect(
+        () => calculator.add('1,-2,3'),
+        throwsA(
+          isA<Exception>().having(
+            (e) => e.toString(),
+            'message',
+            'Exception: negatives not allowed: -2',
+          ),
+        ),
+      );
+    });
+
+    test(
+      'should throw an exception with all negative numbers in the message',
+      () {
+        expect(
+          () => calculator.add('//;\n1;-2;3;-4'),
+          throwsA(
+            isA<Exception>().having(
+              (e) => e.toString(),
+              'message',
+              'Exception: negatives not allowed: -2, -4',
+            ),
+          ),
+        );
+      },
+    );
   });
 }
