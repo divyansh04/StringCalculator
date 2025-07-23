@@ -32,6 +32,14 @@ void main() {
     test('should ignore empty strings from trailing delimiters', () {
       expect(calculator.add('1,2,'), 3);
     });
-
+    test('should support a custom delimiter', () {
+      expect(calculator.add('//;\n1;2'), 3);
+    });
+    test(
+      'should support a custom delimiter that is a regex special character',
+      () {
+        expect(calculator.add('//*\n1*2*3'), 6);
+      },
+    );
   });
 }
