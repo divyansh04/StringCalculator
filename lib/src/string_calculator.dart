@@ -12,7 +12,14 @@ class StringCalculator {
       final delimiterLine = parts.first;
       numbersPart = parts.sublist(1).join('\n');
 
-      final customDelimiter = delimiterLine.substring(2);
+      String customDelimiter;
+      if (delimiterLine.startsWith('//[') && delimiterLine.endsWith(']')) {
+        // Handles "//[delimiter]\n" format
+        customDelimiter = delimiterLine.substring(3, delimiterLine.length - 1);
+      } else {
+        // Handles "//d\n" format for backward compatibility
+        customDelimiter = delimiterLine.substring(2);
+      }
       delimiters = RegExp(RegExp.escape(customDelimiter));
     }
 

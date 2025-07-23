@@ -76,5 +76,9 @@ void main() {
     test('should not ignore the number 1000', () {
       expect(calculator.add('2,1000'), 1002);
     });
+
+    test('should support custom delimiters of any length', () {
+      expect(calculator.add('//[***]\n1***2***3'), 6);
+    });
   });
 }
