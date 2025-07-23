@@ -69,5 +69,12 @@ void main() {
         );
       },
     );
+    test('should ignore numbers bigger than 1000', () {
+      expect(calculator.add('2,1001'), 2);
+    });
+
+    test('should not ignore the number 1000', () {
+      expect(calculator.add('2,1000'), 1002);
+    });
   });
 }
