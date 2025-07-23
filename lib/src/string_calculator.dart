@@ -4,13 +4,11 @@ class StringCalculator {
       return 0;
     }
 
-    // Split the string by comma, convert each part to an integer, and sum them up.
-    // This approach works for one or two numbers.
-    final numberParts = numbers.split(',');
-    int sum = 0;
-    for (final part in numberParts) {
-      sum += int.parse(part.trim());
-    }
-    return sum;
+    // Split the string by comma, convert parts to integers, and sum them up.
+    // This functional approach handles any amount of numbers.
+    return numbers
+        .split(',')
+        .map((part) => int.parse(part.trim()))
+        .fold(0, (previousValue, element) => previousValue + element);
   }
 }
