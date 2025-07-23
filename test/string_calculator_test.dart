@@ -12,5 +12,23 @@ void main() {
       // Assert
       expect(result, 0);
     });
+
+    test('should return the number itself when a single number is given', () {
+      // Arrange
+      final calculator = StringCalculator();
+      // Act
+      final result = calculator.add('5');
+      // Assert
+      expect(result, 5);
+    });
+
+    test('should return the sum of two numbers separated by a comma', () {
+      // Arrange
+      final calculator = StringCalculator();
+      // Act
+      final result = calculator.add('1,2');
+      // Assert
+      expect(result, 3);
+    });
   });
 }
