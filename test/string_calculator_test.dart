@@ -35,6 +35,10 @@ void main() {
     test('should support a custom delimiter', () {
       expect(calculator.add('//;\n1;2'), 3);
     });
+
+    test('should multiply if delimiter * is found', () {
+      expect(calculator.add('//*\n1*2'), 2);
+    });
     test(
       'should support a custom delimiter that is a regex special character',
       () {

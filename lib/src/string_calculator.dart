@@ -38,6 +38,13 @@ class StringCalculator {
       throw Exception('negatives not allowed: ${negatives.join(', ')}');
     }
 
+    // If the delimiter is '*', we multiply instead of adding
+    if (delimiters.contains(RegExp.escape('*'))) {
+      return numberList
+          .where((n) => n <= 1000)
+          .fold(1, (previousValue, element) => previousValue * element);
+    }
+
     return numberList
         .where((n) => n <= 1000) // Ignore numbers bigger than 1000
         .fold(0, (previousValue, element) => previousValue + element);
